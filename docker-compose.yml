@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  drm-tool:
+    build:
+      context: ./
+      dockerfile: ./docker/drm-tool/Dockerfile
+    container_name: drm-tool
+    entrypoint:      
+      - /usr/src/app/docker/drm-tool/run.sh    
+    image: mike/drm-tool
+    ports:
+      - 3000:3000
+    # user: 1000:1000    
+    volumes:
+      - .:/usr/src/app
+      - ./videos:/usr/src/app/videos
+    networks:
+      - default
+      - app_net  
+    # restart: unless-stopped
+    # working_dir: '/var/www/html'    
+    # tty: true
+
+networks:
+  default:
+    driver: bridge    
+  app_net:
+    external: true
